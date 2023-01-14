@@ -1,0 +1,39 @@
+name: release-build
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-win64:
+    runs-on: windows-latest
+    env:
+      OS: windows
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install graalvm
+        uses: DeLaGuardo/setup-graalvm@3
+        with:
+          graalvm-version: '20.0.0.java11'
+      - name: Install native-image
+        run: ${{ env.JAVA_HOME }}\bin\gu.cmd install native-image
+        shell: cmd
+      - name: Configure Pagefile
+        # Increased the page-file size due to memory-consumption of native-image command
+        # For details see https://github.com/actions/virtual-environments/issues/785
+        uses: al-cheb/configure-pagefile-action@v1.2
+      - name: Build native executable
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
+          ./gradlew build -Dquarkus.package.type=native
+        shell: cmd
+      - name: Upload native executable
+        id: upload-native-executable
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./target/rpr-logger-1-runner.exe
+          asset_name: rpr-logger-win64.exe
+          asset_content_type: application/octet-stream

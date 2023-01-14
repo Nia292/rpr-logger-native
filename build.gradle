@@ -19,7 +19,7 @@ dependencies {
 }
 
 group 'eu.tw'
-version '1.0-SNAPSHOT'
+version '1'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
