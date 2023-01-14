@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class LogWriter {
@@ -38,7 +39,7 @@ public class LogWriter {
         // Queue empty => dump to file
         List<String> lines = result.stream()
                 .map(this::toEntry)
-                .toList();
+                .collect(Collectors.toList());
         if (lines.isEmpty()) {
             return;
         }
