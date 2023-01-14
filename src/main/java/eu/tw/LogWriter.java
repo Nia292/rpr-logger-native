@@ -52,7 +52,7 @@ public class LogWriter {
     }
 
     private String toEntry(LogEntry logEntry) {
-        return String.format("[%d][%s][%s][%s][%s] %s", logEntry.date().getTime(), sdf.format(logEntry.date()), logEntry.channel(), logEntry.sender(), logEntry.character(), logEntry.message());
+        return String.format("[%d][%s][%s][%s][%s] %s", logEntry.date.getTime(), sdf.format(logEntry.date), logEntry.channel, logEntry.sender, logEntry.character, logEntry.message);
     }
 
     private String fileName() {
