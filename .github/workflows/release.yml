@@ -1,8 +1,9 @@
 name: release-build
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
 
 jobs:
   build-win64:
