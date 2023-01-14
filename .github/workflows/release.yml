@@ -31,7 +31,10 @@ jobs:
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
           ./gradlew build -Dquarkus.package.type=native
         shell: cmd
+      - name: Copy
+        run: copy D:\a\rpr-logger-native\rpr-logger-native\build\rpr-logger-1-native-image-source-jar\rpr-logger-1-runner.exe rpr-logger-1-runner.exe
+        shell: cmd
       - uses: actions/upload-artifact@v2
         with:
           name: rpr-logger-1-runner.exe
-          path: /**/rpr-logger-1-runner.exe
+          path: rpr-logger-1-runner.exe
