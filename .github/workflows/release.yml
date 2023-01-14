@@ -34,4 +34,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: rpr-logger-1-runner.exe
-          path: /**/rpr-logger-*.exe
+          path: /**/rpr-logger-1-runner.exe
