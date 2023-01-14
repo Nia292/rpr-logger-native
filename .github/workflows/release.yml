@@ -12,12 +12,20 @@ jobs:
       OS: windows
     steps:
       - uses: actions/checkout@v2
-      - name: Install graalvm
-        uses: DeLaGuardo/setup-graalvm@5.0
+      - name: Setup GralLVM
+        uses: graalvm/setup-graalvm@v1
         with:
-          graalvm: '21.0.0.2'
-          java: 'java11'
-          arch: 'amd64'
+          version: 'latest'
+          java-version: '17'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Log Graal
+        run: |
+          echo "GRAALVM_HOME: $GRAALVM_HOME"
+          echo "JAVA_HOME: $JAVA_HOME"
+          java --version
+          gu --version
+          native-image --version
       - name: Install native-image
         run: ${{ env.JAVA_HOME }}\bin\gu.cmd install native-image
         shell: cmd
