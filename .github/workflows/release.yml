@@ -19,13 +19,6 @@ jobs:
           java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Log Graal
-        run: |
-          echo "GRAALVM_HOME: $GRAALVM_HOME"
-          echo "JAVA_HOME: $JAVA_HOME"
-          java --version
-          gu --version
-          native-image --version
       - name: Install native-image
         run: ${{ env.JAVA_HOME }}\bin\gu.cmd install native-image
         shell: cmd
