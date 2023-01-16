@@ -1,5 +1,6 @@
 package eu.tw;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.scheduler.Scheduled;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -20,9 +21,10 @@ public class LogWriter {
 
     private final ConcurrentLinkedQueue<LogEntry> queue = new ConcurrentLinkedQueue<>();
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public LogWriter() {
-        String path = Path.of(fileName()).toAbsolutePath().toString();
+        String path = Path.of(fileNameText()).toAbsolutePath().toString();
         System.out.println("Logging path is: " + path);
     }
 
@@ -40,11 +42,15 @@ public class LogWriter {
         List<String> lines = result.stream()
                 .map(this::toEntry)
                 .collect(Collectors.toList());
+        List<String> jsonLines = result.stream()
+                .map(this::toJsonEntry)
+                .collect(Collectors.toList());
         if (lines.isEmpty()) {
             return;
         }
         try {
-            Files.write(Path.of(fileName()), lines, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            Files.write(Path.of(fileNameText()), lines, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            Files.write(Path.of(fileNameJson()), jsonLines, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             System.out.println("Wrote " + lines.size() + " log entries.");
         } catch (IOException e) {
             System.out.println("Failed to write logfile: " + e.getMessage());
@@ -53,12 +59,28 @@ public class LogWriter {
     }
 
     private String toEntry(LogEntry logEntry) {
-        return String.format("[%d][%s][%s][%s][%s] %s", logEntry.date.getTime(), sdf.format(logEntry.date), logEntry.channel, logEntry.sender, logEntry.character, logEntry.message);
+        return String.format("[%s][%d][%s][%s][%s][%s] %s", logEntry.server, logEntry.date.getTime(), sdf.format(logEntry.date), logEntry.channel, logEntry.sender, logEntry.character, logEntry.message);
     }
 
-    private String fileName() {
+    private String toJsonEntry(LogEntry logEntry) {
+        return objectMapper
+                .createObjectNode()
+                .put("time", logEntry.date.getTime())
+                .put("channel", logEntry.channel)
+                .put("sender", logEntry.sender)
+                .put("character", logEntry.character)
+                .put("message", logEntry.message)
+                .put("server", logEntry.server)
+                .toString();
+    }
+
+    private String fileNameText() {
         LocalDateTime now = LocalDateTime.now();
         return "./" + now.getYear() + "_" + now.getMonthValue() + "_" + now.getDayOfMonth() + "_rpr_chat.log";
     }
 
+    private String fileNameJson() {
+        LocalDateTime now = LocalDateTime.now();
+        return "./" + now.getYear() + "_" + now.getMonthValue() + "_" + now.getDayOfMonth() + "_rpr_chat.json";
+    }
 }

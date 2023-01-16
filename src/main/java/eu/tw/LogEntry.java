@@ -10,8 +10,16 @@ public class LogEntry {
     public final String location;
     public final String channel;
     public final Date date;
+    public final String server;
 
-    public LogEntry(String message, String sender, String character, String radius, String location, String channel, Date date) {
+    public LogEntry(String message,
+                    String sender,
+                    String character,
+                    String radius,
+                    String location,
+                    String channel,
+                    Date date,
+                    String server) {
         this.message = message;
         this.sender = sender;
         this.character = character;
@@ -19,6 +27,7 @@ public class LogEntry {
         this.location = location;
         this.channel = channel;
         this.date = date;
+        this.server = server;
     }
 
 }
