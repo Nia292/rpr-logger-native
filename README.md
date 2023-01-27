@@ -27,6 +27,7 @@ In the Roleplay Redux webhook settings, set the following URL for the webhook:
 Replace:
 - {server} with a name for your server. Don't use special characters or whitespaces, i.E. TWEL
 - {secret} with the secret you wrote into config.txt
+
 Done. Your logger should now run and create logfiles in the folder the executable is in.
 
 
