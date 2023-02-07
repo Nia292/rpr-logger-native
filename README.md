@@ -1,8 +1,19 @@
-# RPR LOgger
+# RPR Logger
 
 A logger for TOT! Chat using Roleplay Redux' webhook feature.
 
-# Usage
+# Usage - Local Side
+You can use the precompiled executable from the download section to run a local RPR logger intended for the local RPR feature.
+
+1. Download the latest release from the Releases tab
+2. Create a new folder somewhere, name it "rpr-logger"
+3. Put the executable there, double-click to launch.
+4. You may be prompted to allow the application firewall access. That should not be necessary.
+5. Once launched, you should see the webhook URL you need to put in as local webhook in the console.
+
+Done. Messages are written to the logfile every 30 seconds.
+
+# Usage - Server Side
 IMPORTANT
 ```
 TO USE THIS, YOU WILL NEED TO HAVE ACCESS TO THE OPERATION SYSTEM OF YOUR SERVER, AND THAT OPERATION SYSTEM NEEDS TO BE WINDOWS IF YOU WISH TO USE THE PRECOMPILED BINARY. 

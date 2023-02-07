@@ -24,7 +24,7 @@ public class LogWriter {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public LogWriter() {
-        String path = Path.of(fileNameText()).toAbsolutePath().toString();
+        String path = Path.of(fileNameText()).toAbsolutePath().normalize().toString();
         System.out.println("Logging path is: " + path);
     }
 

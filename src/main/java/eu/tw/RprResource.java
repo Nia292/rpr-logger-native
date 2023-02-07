@@ -15,9 +15,9 @@ public class RprResource {
     private final LogWriter logWriter;
     private final Config config;
 
-    public RprResource(LogWriter logWriter) {
+    public RprResource(LogWriter logWriter, Config config) {
         this.logWriter = logWriter;
-        this.config = new Config();
+        this.config = config;
     }
 
     @GET
