@@ -9,7 +9,7 @@ You can use the precompiled executable from the download section to run a local 
 2. Create a new folder somewhere, name it "rpr-logger"
 3. Put the executable there, double-click to launch.
 4. You may be prompted to allow the application firewall access. That should not be necessary.
-5. Once launched, you should see the webhook URL you need to put in as local webhook in the console.
+5. Once launched, you should see the webhook URL in the console that pops up. That Webhook URL is the one you will need to paste into the RPR Configuration.
 
 Done. Messages are written to the logfile every 30 seconds.
 
